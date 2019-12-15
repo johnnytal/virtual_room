@@ -21,7 +21,7 @@ gameMain.prototype = {
     	kid = game.add.sprite(0, 0, 'kid');
 
     	kid.x = WIDTH / 2 - kid.width / 2;
-    	kid.y = HEIGHT - kid.height;
+    	kid.y = HEIGHT / 2 - kid.height;
     	
     	arrow = kid.addChild(game.make.sprite(kid.width / 2, 0, 'arrow'));
     	arrow.anchor.set(.5, 1);
