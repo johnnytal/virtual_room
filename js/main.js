@@ -1,33 +1,33 @@
-var gameMain = function(game){};
+var gameMain = function(game){
+	overall_accel = 0;
+	overall_steps = 0;
+};
 
 gameMain.prototype = {
     create: function(){
-    	game.stage.backgroundColor = '#faf';
+    	debugAccel = game.add.text(110, 30, "overall accel: " + overall_accel, {font: '42px', fill: 'white'});
+    	debugSteps = game.add.text(110, 100, "overall steps: " + overall_steps, {font: '42px', fill: 'white'});
     	
-		ble.scan([], 15, success, failure); //services, seconds, success, failure
+		try{
+			window.addEventListener('deviceorientation', readAccel);
+		}catch(e){}
     }
 };
 
-function success(device){
-	game.stage.backgroundColor = '#0a0';
+function readAccel(event){
+	overall_accel = Math.abs(
+		event.accelerationIncludingGravity.x + 
+		event.accelerationIncludingGravity.y + 
+		event.accelerationIncludingGravity.z
+	);
 	
-	alert(JSON.stringify(device));
+	debugAccel.text = "overall accel: " + overall_accel;
 	
-	setTimeout(function(){
-		ble.connect(device.id, connectCallback, disconnectCallback);
-	}, 5000);
+	if (overall_accel > 15){
+		overall_steps++;
+		debugSteps.text = "overall steps: " + overall_steps;
+	}
 }
 
-function failure(e){
-	game.stage.backgroundColor = '#000';
-	
-	alert(e);
-}
 
-function connectCallback(){
-	alert('connected!');
-}
 
-function disconnectCallback(){
-	alert('disconnected!');
-}
