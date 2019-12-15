@@ -9,7 +9,7 @@ gameMain.prototype = {
     	debugSteps = game.add.text(110, 100, "overall steps: " + overall_steps, {font: '42px', fill: 'white'});
     	
 		try{
-			window.addEventListener('deviceorientation', readAccel);
+			window.addEventListener('devicemotion', readAccel);
 		}catch(e){}
     }
 };
