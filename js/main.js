@@ -77,7 +77,10 @@ function readOrientation(event) {
     arrow.angle = head;
     
     debugAngle.text = "angle: " + head;
-    
-    add_y = 50 - (Math.sin(head) - 0.5) * 50;
-    add_x = 0 + (Math.sin(head) - 0.5) * 50;
+
+    //If you have an angle (A), in radians, in the range -Pi to Pi, then convert it to a vector (V) with:
+
+	add_x = Math.cos(head * (Math.PI / 180)) * 10;
+	add_y = Math.sin(head * (Math.PI / 180)) * 10;
+
 }
