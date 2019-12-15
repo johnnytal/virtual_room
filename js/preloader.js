@@ -11,14 +11,10 @@ preloader.prototype = {
         loadingTxt = this.add.text(this.game.world.centerX - 37,  this.game.world.centerY - 150, "Loading...", {
             font: '18px', fill: 'lightgrey', fontWeight: 'normal', align: 'center'
         });
-        
-        this.game.load.spritesheet("button", "assets/images/button4.png", 486/2, 185);
-        this.game.load.image("gear", "assets/images/gearBtn2.png");
-        this.game.load.image("ok", "assets/images/ok.png");
-        this.game.load.image("musicBtn", "assets/images/musicBtn.png");
-        this.game.load.image("panel", "assets/images/panel.png");
-
-        this.game.load.audio('musicSfx2', 'assets/audio/music2.ogg');
+                
+        this.game.load.image("computer", "assets/images/computer.jpg");
+        this.game.load.image("instruments", "assets/images/instruments.jpg");
+        this.game.load.image("sofa", "assets/images/sofa.jpg");
     },
     
     create: function(){
