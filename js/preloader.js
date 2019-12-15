@@ -12,10 +12,8 @@ preloader.prototype = {
             font: '18px', fill: 'lightgrey', fontWeight: 'normal', align: 'center'
         });
                 
-        this.game.load.image("computer", "assets/images/computer.jpg");
-        this.game.load.image("instruments", "assets/images/instruments.jpg");
-        this.game.load.image("sofa", "assets/images/sofa.jpg");
-        
+        this.game.load.image("room", "assets/images/room.jpg");
+
         this.game.load.image("kid", "assets/images/kid.png");
         this.game.load.image("arrow", "assets/images/arrow.png");
     },

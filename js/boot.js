@@ -4,7 +4,7 @@ document.addEventListener("deviceready", start, false);
 
 function start(){ 
     WIDTH = 850; 
-    HEIGHT = 1100; 
+    HEIGHT = 850; 
 
     game = new Phaser.Game(WIDTH, HEIGHT, Phaser.CANVAS, "game");    
       
@@ -19,18 +19,9 @@ var boot = function(game){};
  
 boot.prototype = {
     create: function(){
-        game.stage.backgroundColor = '#335';
-        
-        if (this.game.device.desktop){
-            this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            
-            this.scale.maxWidth = 1080 / 2.5; 
-            this.scale.maxHeight = 1920 / 2.5; 
-        } 
-        
-        else {
-            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
+        if (!this.game.device.desktop){
             this.scale.maxWidth = window.innerWidth * window.devicePixelRatio;
             this.scale.maxHeight = window.innerHeight * window.devicePixelRatio;
             

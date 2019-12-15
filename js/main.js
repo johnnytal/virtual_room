@@ -4,42 +4,39 @@ var gameMain = function(game){
 	
 	step_ended = true;
 	
-	STEP_ACCEL = 11.8;
-	STEP_TIME = 350;
-	
-	images = ['computer', 'instruments', 'sofa'];
-	
+	STEP_ACCEL = 11.3;
+	STEP_TIME = 300;
+
 	head = 0;
 	add_y = 0;
 	add_x = 0;
+	
+	STEP_VALUE = WIDTH / 7; // 7 steps is the width and height of the room
 };
 
 gameMain.prototype = {
     create: function(){
-    	bgImage = game.add.image(0, 0, images[0]);
+    	bgImage = game.add.image(0, 0, 'room');
     	
     	kid = game.add.sprite(0, 0, 'kid');
 
     	kid.x = WIDTH / 2 - kid.width / 2;
-    	kid.y = HEIGHT / 2 - kid.height;
+    	kid.y = HEIGHT - kid.height - 50;
     	
     	arrow = kid.addChild(game.make.sprite(kid.width / 2, 0, 'arrow'));
+    	arrow.scale.set(.75, .75);
     	arrow.anchor.set(.5, 1);
     	arrow.angle = head;
     	
 	  	game.physics.enable(kid, Phaser.Physics.ARCADE);
   		game.physics.enable(arrow, Phaser.Physics.ARCADE);
 
-    	debugAccel = game.add.text(110, 30, "overall accel: " + overall_accel, {font: '42px', fill: 'white'});
-    	debugSteps = game.add.text(110, 100, "overall steps: " + overall_steps, {font: '42px', fill: 'white'});
+    	debugAccel = game.add.text(110, 50, "overall accel: " + overall_accel, {font: '42px', fill: 'black'});
+    	debugSteps = game.add.text(110, 100, "overall steps: " + overall_steps, {font: '42px', fill: 'black'});
     	
-    	debugAngle = game.add.text(110, 200, "angle: " + head, {font: '42px', fill: 'pink'});
-    	debugkid = game.add.text(110, 350, "kid.x: " + kid.x + '\n' + "kid.y: " + kid.y, {font: '42px', fill: 'pink'});
+    	debugAngle = game.add.text(450, 75, "angle: " + head, {font: '42px', fill: 'purple'});
+    	debugkid = game.add.text(185, 175, "x: " + kid.body.x + '\n' + "y: " + kid.body.y, {font: '42px', fill: 'orange'});
 
-        try{
-        	window.plugins.insomnia.keepAwake();
-    	} catch(e){}
-    	
 		try{
 			window.addEventListener('devicemotion', readAccel);
 		}catch(e){}
@@ -47,6 +44,10 @@ gameMain.prototype = {
 		try{
 			window.addEventListener("deviceorientation", readOrientation, true);
 		}catch(e){}
+
+        try{
+        	window.plugins.insomnia.keepAwake();
+    	} catch(e){}	
    }
 };
 
@@ -63,14 +64,14 @@ function readAccel(event){
 		
 		step_ended = false;
 		
-		setTimeout(function(){
-			step_ended = true;
-		}, STEP_TIME);
-		
 		kid.x += add_x;
 		kid.y += add_y;
 		
-		debugKid.text = "kid.x: " + kid.x + '\n' + "kid.y: " + kid.y;
+		debugKid.text = "x: " + kid.body.x + '\n' + "y: " + kid.body.y;
+		
+		setTimeout(function(){
+			step_ended = true;
+		}, STEP_TIME);
 	}
 }
 
@@ -81,6 +82,6 @@ function readOrientation(event) {
     
     debugAngle.text = "angle: " + head;
 
-	add_y = Math.cos(head * (Math.PI / 180)) * -40; // cos of radians times step value
-	add_x = Math.sin(head * (Math.PI / 180)) * 40;
+	add_y = Math.cos(head * (Math.PI / 180)) * -STEP_VALUE; // cos of radians times step value
+	add_x = Math.sin(head * (Math.PI / 180)) * STEP_VALUE;
 }
