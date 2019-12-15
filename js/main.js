@@ -4,8 +4,8 @@ var gameMain = function(game){
 	
 	step_ended = true;
 	
-	STEP_ACCEL = 13.5;
-	STEP_TIME = 500;
+	STEP_ACCEL = 13.3;
+	STEP_TIME = 400;
 	
 	images = ['computer', 'instruments', 'sofa'];
 	
@@ -15,6 +15,11 @@ var gameMain = function(game){
 gameMain.prototype = {
     create: function(){
     	bgImage = game.add.image(0, 0, images[0]);
+    	
+    	kid = game.add.image(0, 0, 'kid');
+    	
+    	kid.x = WIDTH / 2 - kid.width / 2;
+    	kid.y = HEIGHT - kid.height;
     	
     	debugAccel = game.add.text(110, 30, "overall accel: " + overall_accel, {font: '42px', fill: 'white'});
     	debugSteps = game.add.text(110, 100, "overall steps: " + overall_steps, {font: '42px', fill: 'white'});
@@ -44,7 +49,7 @@ function readAccel(event){
 	
 	debugAccel.text = "overall accel: " + overall_accel;
 	
-	if (overall_accel > STEP_ACCEL){
+	if (step_ended && overall_accel > STEP_ACCEL){
 		overall_steps++;
 		debugSteps.text = "overall steps: " + overall_steps;
 		
@@ -53,11 +58,13 @@ function readAccel(event){
 		setTimeout(function(){
 			step_ended = true;
 		}, STEP_TIME);
+		
+		kid.y -= 50;
 	}
 }
 
 function readOrientation(event) {
-    head = 360 - event.alpha;
+    head = Math.round(360 - event.alpha);
     
     debugAngle.text = "angle: " + head;
 }
