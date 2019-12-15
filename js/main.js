@@ -80,7 +80,7 @@ function readOrientation(event) {
 
     //If you have an angle (A), in radians, in the range -Pi to Pi, then convert it to a vector (V) with:
 
-	add_x = Math.cos(head * (Math.PI / 180)) * 10;
-	add_y = Math.sin(head * (Math.PI / 180)) * 10;
+	add_y = Math.cos(head * (Math.PI / 180)) * 50;
+	add_x = Math.sin(head * (Math.PI / 180)) * 50;
 
 }
