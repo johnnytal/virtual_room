@@ -4,23 +4,32 @@ var gameMain = function(game){
 	
 	step_ended = true;
 	
-	STEP_ACCEL = 13.3;
-	STEP_TIME = 400;
+	STEP_ACCEL = 13.4;
+	STEP_TIME = 350;
 	
 	images = ['computer', 'instruments', 'sofa'];
 	
 	head = 0;
+	add_y = 0;
+	add_x = 0;
 };
 
 gameMain.prototype = {
     create: function(){
     	bgImage = game.add.image(0, 0, images[0]);
     	
-    	kid = game.add.image(0, 0, 'kid');
-    	
+    	kid = game.add.sprite(0, 0, 'kid');
+
     	kid.x = WIDTH / 2 - kid.width / 2;
     	kid.y = HEIGHT - kid.height;
     	
+    	arrow = kid.addChild(game.make.sprite(kid.width / 2, 0, 'arrow'));
+    	arrow.anchor.set(.5, 1);
+    	arrow.angle = head;
+    	
+	  	game.physics.enable(kid, Phaser.Physics.ARCADE);
+  		game.physics.enable(arrow, Phaser.Physics.ARCADE);
+
     	debugAccel = game.add.text(110, 30, "overall accel: " + overall_accel, {font: '42px', fill: 'white'});
     	debugSteps = game.add.text(110, 100, "overall steps: " + overall_steps, {font: '42px', fill: 'white'});
     	
@@ -37,7 +46,7 @@ gameMain.prototype = {
 		try{
 			window.addEventListener("deviceorientation", readOrientation, true);
 		}catch(e){}
-    }
+   }
 };
 
 function readAccel(event){
@@ -47,7 +56,7 @@ function readAccel(event){
 		event.accelerationIncludingGravity.z
 	);
 	
-	debugAccel.text = "overall accel: " + overall_accel;
+	debugAccel.text = "overall accel: " + Math.round(overall_accel * 100) / 100;
 	
 	if (step_ended && overall_accel > STEP_ACCEL){
 		overall_steps++;
@@ -59,12 +68,18 @@ function readAccel(event){
 			step_ended = true;
 		}, STEP_TIME);
 		
-		kid.y -= 50;
+		kid.x += add_x;
+		kid.y += add_y;
 	}
 }
 
 function readOrientation(event) {
     head = Math.round(360 - event.alpha);
     
+    arrow.angle = head;
+    
     debugAngle.text = "angle: " + head;
+    
+    add_y = 25 - Math.sin(head) * 25;
+    add_x = 0 + Math.sin(head) * 25;
 }
