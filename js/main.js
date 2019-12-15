@@ -35,7 +35,6 @@ gameMain.prototype = {
     	debugSteps = game.add.text(110, 100, "overall steps: " + overall_steps, {font: '42px', fill: 'black'});
     	
     	debugAngle = game.add.text(450, 75, "angle: " + head, {font: '42px', fill: 'purple'});
-    	debugkid = game.add.text(185, 175, "x: " + kid.body.x + '\n' + "y: " + kid.body.y, {font: '42px', fill: 'orange'});
 
 		try{
 			window.addEventListener('devicemotion', readAccel);
@@ -66,8 +65,6 @@ function readAccel(event){
 		
 		kid.x += add_x;
 		kid.y += add_y;
-		
-		debugKid.text = "x: " + kid.body.x + '\n' + "y: " + kid.body.y;
 		
 		setTimeout(function(){
 			step_ended = true;
