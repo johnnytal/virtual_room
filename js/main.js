@@ -51,8 +51,6 @@ gameMain.prototype = {
 
 function readAccel(event){
 	overall_accel = Math.abs(
-		event.accelerationIncludingGravity.x + 
-		event.accelerationIncludingGravity.y + 
 		event.accelerationIncludingGravity.z
 	);
 	
@@ -80,6 +78,6 @@ function readOrientation(event) {
     
     debugAngle.text = "angle: " + head;
     
-    add_y = 25 - Math.sin(head) * 25;
-    add_x = 0 + Math.sin(head) * 25;
+    add_y = 50 - (Math.sin(head) - 0.5) * 50;
+    add_x = 0 + (Math.sin(head) - 0.5) * 50;
 }
