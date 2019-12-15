@@ -4,7 +4,7 @@ var gameMain = function(game){
 	
 	step_ended = true;
 	
-	STEP_ACCEL = 13.4;
+	STEP_ACCEL = 11.8;
 	STEP_TIME = 350;
 	
 	images = ['computer', 'instruments', 'sofa'];
@@ -34,6 +34,7 @@ gameMain.prototype = {
     	debugSteps = game.add.text(110, 100, "overall steps: " + overall_steps, {font: '42px', fill: 'white'});
     	
     	debugAngle = game.add.text(110, 200, "angle: " + head, {font: '42px', fill: 'pink'});
+    	debugkid = game.add.text(110, 350, "kid.x: " + kid.x + '\n' + "kid.y: " + kid.y, {font: '42px', fill: 'pink'});
 
         try{
         	window.plugins.insomnia.keepAwake();
@@ -68,6 +69,8 @@ function readAccel(event){
 		
 		kid.x += add_x;
 		kid.y += add_y;
+		
+		debugKid.text = "kid.x: " + kid.x + '\n' + "kid.y: " + kid.y;
 	}
 }
 
@@ -78,9 +81,6 @@ function readOrientation(event) {
     
     debugAngle.text = "angle: " + head;
 
-    //If you have an angle (A), in radians, in the range -Pi to Pi, then convert it to a vector (V) with:
-
-	add_y = Math.cos(head * (Math.PI / 180)) * -30;
-	add_x = Math.sin(head * (Math.PI / 180)) * 30;
-
+	add_y = Math.cos(head * (Math.PI / 180)) * -40; // cos of radians times step value
+	add_x = Math.sin(head * (Math.PI / 180)) * 40;
 }
