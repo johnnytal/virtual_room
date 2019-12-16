@@ -4,12 +4,14 @@ var gameMain = function(game){
 	
 	step_ended = true;
 	
-	STEP_ACCEL = 11.3;
+	STEP_ACCEL = 11;
 	STEP_TIME = 300;
 
 	head = 0;
 	add_y = 0;
 	add_x = 0;
+	
+	factor = 0;
 	
 	STEP_VALUE = WIDTH / 7; // 7 steps is the width and height of the room
 };
@@ -23,10 +25,13 @@ gameMain.prototype = {
     	kid.x = WIDTH / 2 - kid.width / 2;
     	kid.y = HEIGHT - kid.height - 50;
     	
-    	arrow = kid.addChild(game.make.sprite(kid.width / 2, 0, 'arrow'));
+    	arrow = kid.addChild(game.make.sprite(kid.width / 2, 5, 'arrow'));
     	arrow.scale.set(.75, .75);
     	arrow.anchor.set(.5, 1);
     	arrow.angle = head;
+    	
+	    kid.inputEnabled = true;
+    	kid.events.onInputDown.add(calibrate_head, this);
     	
 	  	game.physics.enable(kid, Phaser.Physics.ARCADE);
   		game.physics.enable(arrow, Phaser.Physics.ARCADE);
@@ -73,7 +78,7 @@ function readAccel(event){
 }
 
 function readOrientation(event) {
-    head = Math.round(360 - event.alpha);
+    head = Math.round(360 - event.alpha) + factor;
     
     arrow.angle = head;
     
@@ -81,4 +86,8 @@ function readOrientation(event) {
 
 	add_y = Math.cos(head * (Math.PI / 180)) * -STEP_VALUE; // cos of radians times step value
 	add_x = Math.sin(head * (Math.PI / 180)) * STEP_VALUE;
+}
+
+function calibrate_head(){
+	factor = head * -1;
 }
