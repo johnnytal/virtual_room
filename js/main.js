@@ -4,8 +4,8 @@ var gameMain = function(game){
 	
 	step_ended = true;
 	
-	STEP_ACCEL = 11;
-	STEP_TIME = 300;
+	STEP_ACCEL = 13.5;
+	STEP_TIME = 400;
 
 	head = 0;
 	add_y = 0;
@@ -13,7 +13,7 @@ var gameMain = function(game){
 	
 	factor = 0;
 	
-	STEP_VALUE = WIDTH / 7; // 7 steps is the width and height of the room
+	STEP_VALUE = WIDTH / 8; // x steps is the width and height of the room
 };
 
 gameMain.prototype = {
@@ -90,7 +90,7 @@ function collideKid(_object){
 
 function readAccel(event){
 	overall_accel = Math.abs(
-		event.accelerationIncludingGravity.z + (event.accelerationIncludingGravity.y / 2)
+		event.accelerationIncludingGravity.z + (event.accelerationIncludingGravity.y / 1.7)
 	);
 	
 	debugAccel.text = "overall accel: " + Math.round(overall_accel * 100) / 100;
