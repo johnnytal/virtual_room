@@ -16,6 +16,10 @@ preloader.prototype = {
 
         this.game.load.image("kid", "assets/images/kid.png");
         this.game.load.image("arrow", "assets/images/arrow.png");
+        
+        this.game.load.image("table", "assets/images/table.png");
+        this.game.load.image("tv", "assets/images/tv.png");
+        this.game.load.image("sofa", "assets/images/sofa.png");
     },
     
     create: function(){

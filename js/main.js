@@ -18,8 +18,8 @@ var gameMain = function(game){
 
 gameMain.prototype = {
     create: function(){
-    	bgImage = game.add.image(0, 0, 'room');
-    	
+    	game.stage.backgroundColor = '#f24';
+
     	kid = game.add.sprite(0, 0, 'kid');
 
     	kid.x = WIDTH / 2 - kid.width / 2;
@@ -33,9 +33,16 @@ gameMain.prototype = {
 	    kid.inputEnabled = true;
     	kid.events.onInputDown.add(calibrate_head, this);
     	
-	  	game.physics.enable(kid, Phaser.Physics.ARCADE);
+    	table = game.add.sprite(450, 150, 'table');
+    	tv = game.add.sprite(100, 400, 'tv');
+    	sofa = game.add.sprite(650, 450, 'sofa');
+    	
+    	game.physics.enable(kid, Phaser.Physics.ARCADE);
   		game.physics.enable(arrow, Phaser.Physics.ARCADE);
-
+  		game.physics.enable(table, Phaser.Physics.ARCADE);
+  		game.physics.enable(tv, Phaser.Physics.ARCADE);
+  		game.physics.enable(sofa, Phaser.Physics.ARCADE);
+  		
     	debugAccel = game.add.text(110, 50, "overall accel: " + overall_accel, {font: '42px', fill: 'black'});
     	debugSteps = game.add.text(110, 100, "overall steps: " + overall_steps, {font: '42px', fill: 'black'});
     	
@@ -52,12 +59,38 @@ gameMain.prototype = {
         try{
         	window.plugins.insomnia.keepAwake();
     	} catch(e){}	
+   },
+   update: function(){
+ 		checkOverlap(kid, sofa);    
+ 		checkOverlap(kid, table);    
+ 		checkOverlap(kid, tv);    
    }
 };
 
+function checkOverlap(spriteA, spriteB) {
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    if (Phaser.Rectangle.intersects(boundsA, boundsB)){
+    	collideKid(spriteB);
+    }
+}
+
+function collideKid(_object){
+	if (_object.key == 'sofa' && game.stage.backgroundColor != '#f0f'){
+		game.stage.backgroundColor = '#f0f';
+	}
+	else if (_object.key == 'table' && game.stage.backgroundColor != '#0ff'){
+		game.stage.backgroundColor = '#0ff';
+	}
+	else if (_object.key == 'tv' && game.stage.backgroundColor != '#0f0'){
+		game.stage.backgroundColor = '#0f0';
+	}
+}
+
 function readAccel(event){
 	overall_accel = Math.abs(
-		event.accelerationIncludingGravity.z
+		event.accelerationIncludingGravity.z + (event.accelerationIncludingGravity.y / 2)
 	);
 	
 	debugAccel.text = "overall accel: " + Math.round(overall_accel * 100) / 100;
