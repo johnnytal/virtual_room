@@ -27,6 +27,11 @@ boot.prototype = {
             
             this.scale.forceOrientation(true, false );
         }
+        
+        else{
+            this.scale.maxWidth = window.innerWidth * window.devicePixelRatio;
+            this.scale.maxHeight = window.innerHeight * window.devicePixelRatio;	
+        }
 
         game.state.start('Preloader');
     }

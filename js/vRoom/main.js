@@ -4,8 +4,8 @@ var gameMain = function(game){
 	
 	step_ended = true;
 	
-	STEP_ACCEL = 13.5;
-	STEP_TIME = 400;
+	STEP_ACCEL = 13;
+	STEP_TIME = 580;
 
 	head = 0;
 	add_y = 0;
@@ -13,12 +13,12 @@ var gameMain = function(game){
 	
 	factor = 0;
 	
-	STEP_VALUE = WIDTH / 8; // x steps is the width and height of the room
+	STEP_VALUE = WIDTH / 7.5; // x steps is the width and height of the room
 };
 
 gameMain.prototype = {
     create: function(){
-    	game.stage.backgroundColor = '#f24';
+    	game.stage.backgroundColor = '#f7f7f7';
 
     	kid = game.add.sprite(0, 0, 'kid');
 
@@ -43,10 +43,10 @@ gameMain.prototype = {
   		game.physics.enable(tv, Phaser.Physics.ARCADE);
   		game.physics.enable(sofa, Phaser.Physics.ARCADE);
   		
-    	debugAccel = game.add.text(110, 50, "overall accel: " + overall_accel, {font: '42px', fill: 'black'});
-    	debugSteps = game.add.text(110, 100, "overall steps: " + overall_steps, {font: '42px', fill: 'black'});
+    	debugAccel = game.add.text(75, 50, "Accel: " + overall_accel, {font: '42px', fill: 'black'});
+    	debugSteps = game.add.text(75, 100, "Steps: " + overall_steps, {font: '42px', fill: 'black'});
     	
-    	debugAngle = game.add.text(450, 75, "angle: " + head, {font: '42px', fill: 'purple'});
+    	debugAngle = game.add.text(500, 50, "Angle: " + head, {font: '42px', fill: 'purple'});
 
 		try{
 			window.addEventListener('devicemotion', readAccel);
@@ -59,6 +59,10 @@ gameMain.prototype = {
         try{
         	window.plugins.insomnia.keepAwake();
     	} catch(e){}	
+    	
+    	setTimeout(function(){ // initial calibration
+    		calibrate_head();
+    	}, 1000);
    },
    update: function(){
  		checkOverlap(kid, sofa);    
@@ -77,6 +81,8 @@ function checkOverlap(spriteA, spriteB) {
 }
 
 function collideKid(_object){
+	navigator.vibrate(50);
+	
 	if (_object.key == 'sofa' && game.stage.backgroundColor != '#f0f'){
 		game.stage.backgroundColor = '#f0f';
 	}
@@ -90,14 +96,14 @@ function collideKid(_object){
 
 function readAccel(event){
 	overall_accel = Math.abs(
-		event.accelerationIncludingGravity.z + (event.accelerationIncludingGravity.y / 1.7)
+		event.accelerationIncludingGravity.z + (event.accelerationIncludingGravity.y / 1.65)
 	);
 	
-	debugAccel.text = "overall accel: " + Math.round(overall_accel * 100) / 100;
+	debugAccel.text = "Accel: " + Math.round(overall_accel * 10) / 10;
 	
 	if (step_ended && overall_accel > STEP_ACCEL){
 		overall_steps++;
-		debugSteps.text = "overall steps: " + overall_steps;
+		debugSteps.text = "Steps: " + overall_steps;
 		
 		step_ended = false;
 		
@@ -115,7 +121,7 @@ function readOrientation(event) {
     
     arrow.angle = head;
     
-    debugAngle.text = "angle: " + head;
+    debugAngle.text = "Angle: " + head;
 
 	add_y = Math.cos(head * (Math.PI / 180)) * -STEP_VALUE; // cos of radians times step value
 	add_x = Math.sin(head * (Math.PI / 180)) * STEP_VALUE;

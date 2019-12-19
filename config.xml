@@ -40,7 +40,6 @@
 		<plugin name="cordova-plugin-vibration" spec="*"/>
 		<plugin name="cordova-plugin-device-motion" spec="*"/>
 		<plugin name="cordova-plugin-media" spec="*"/>
-		<plugin name="cordova-plugin-ble-central" source="npm" />
 
 		<icon src="512x512.png" />
 		

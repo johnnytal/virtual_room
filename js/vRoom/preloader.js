@@ -12,14 +12,12 @@ preloader.prototype = {
             font: '18px', fill: 'lightgrey', fontWeight: 'normal', align: 'center'
         });
                 
-        this.game.load.image("room", "assets/images/room.jpg");
-
-        this.game.load.image("kid", "assets/images/kid.png");
-        this.game.load.image("arrow", "assets/images/arrow.png");
+        this.game.load.image("kid", "assets/vRoom/images/kid.png");
+        this.game.load.image("arrow", "assets/vRoom/images/arrow.png");
         
-        this.game.load.image("table", "assets/images/table.png");
-        this.game.load.image("tv", "assets/images/tv.png");
-        this.game.load.image("sofa", "assets/images/sofa.png");
+        this.game.load.image("table", "assets/vRoom/images/table.png");
+        this.game.load.image("tv", "assets/vRoom/images/tv.png");
+        this.game.load.image("sofa", "assets/vRoom/images/sofa.png");
     },
     
     create: function(){
