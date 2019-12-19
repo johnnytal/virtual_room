@@ -4,15 +4,13 @@ var gameMain = function(game){
 	
 	step_ended = true;
 	
-	STEP_ACCEL = 13;
-	STEP_TIME = 580;
+	STEP_ACCEL = 12.5;
+	STEP_TIME = 500;
 
 	head = 0;
 	add_y = 0;
 	add_x = 0;
-	
-	factor = 0;
-	
+
 	STEP_VALUE = WIDTH / 7.5; // x steps is the width and height of the room
 };
 
@@ -60,9 +58,9 @@ gameMain.prototype = {
         	window.plugins.insomnia.keepAwake();
     	} catch(e){}	
     	
-    	setTimeout(function(){ // initial calibration
+    	/*setTimeout(function(){ // initial calibration
     		calibrate_head();
-    	}, 1000);
+    	}, 1000);*/
    },
    update: function(){
  		checkOverlap(kid, sofa);    
@@ -117,7 +115,7 @@ function readAccel(event){
 }
 
 function readOrientation(event) {
-    head = Math.round(360 - event.alpha) + factor;
+    head = Math.round(360 - event.alpha);
     
     arrow.angle = head;
     
@@ -128,5 +126,5 @@ function readOrientation(event) {
 }
 
 function calibrate_head(){
-	factor = head * -1;
+	head *= -1;
 }
